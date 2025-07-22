@@ -1,69 +1,55 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from unfold.admin import ModelAdmin
 from unfold.contrib.forms.widgets import WysiwygWidget
+from .models import Article, ArticleCategory, ArticleTag
 from modeltranslation.admin import TabbedTranslationAdmin
-from .models import Article, ArticleTag, ArticleCategory
 
 @admin.register(ArticleTag)
 class ArticleTagAdmin(TabbedTranslationAdmin, ModelAdmin):
-    search_fields = ('title',)
+    list_display = ("title",)
+    search_fields = ("title",)
+    tabs = True
 
 @admin.register(ArticleCategory)
 class ArticleCategoryAdmin(TabbedTranslationAdmin, ModelAdmin):
-    search_fields = ('title',)
+    list_display = ("title",)
+    search_fields = ("title",)
+    tabs = True
 
-# Main Article Admin with advanced UX configuration
 @admin.register(Article)
 class ArticleAdmin(TabbedTranslationAdmin, ModelAdmin):
-    list_display = ('title', 'status', 'category', 'published_at')
-    list_filter = ('status', 'category')
-    search_fields = ('title', 'content', 'subtitle')
-    
-    formfield_overrides = {
-        models.TextField: {"widget": WysiwygWidget},
-    }
-
-    sidebar = [
-        "status",
-        "published_at",
-        "image",
-    ]
+    ordering_field = "weight"
+    tabs = True
+    list_display = ("title", "status", "category", "published_at")
+    list_filter = ("status", "category", "tags")
+    search_fields = ("title", "subtitle", "content")
+    autocomplete_fields = ("category", "tags")
+    readonly_fields = ("slug",)
 
     fieldsets = (
-        # Section 1 Main content
-        (None, {
+        (_("Content"), {
             "fields": (
-                "title", 
-                "subtitle", 
-                "content",
+                "title", "subtitle", "content",
+                "category", "tags", "image",
+                "status", "published_at",
             ),
         }),
-        # Section 2 Relation
-        ("Kategori & Tag", {
+        (_("SEO"), {
             "fields": (
-                "category", 
-                "tags",
+                "slug", "meta_title", "meta_description",
+                "featured_image_url", "featured_image_alt",
+                "canonical_url", "structured_data",
             ),
-        }),
-        # Section 3 Seo
-        ("Pengaturan SEO", {
             "classes": ("collapse",),
-            "fields": (
-                "slug",
-                "meta_title",
-                "meta_description",
-                "featured_image_url",
-                "featured_image_alt",
-                "canonical_url",
-                "structured_data",
-            ),
         }),
     )
 
-    # Auto slug from title
-    prepopulated_fields = {
-        "slug": ("title",),
+    formfield_overrides = {
+        models.TextField: {"widget": WysiwygWidget},  
+        Article._meta.get_field("title"): {"widget": None},
+        Article._meta.get_field("meta_title"): {"widget": WysiwygWidget},
+        Article._meta.get_field("meta_description"): {"widget": WysiwygWidget},
+        Article._meta.get_field("structured_data"): {"widget": WysiwygWidget},
     }
-    
-    filter_horizontal = ('tags',)
