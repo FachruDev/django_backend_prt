@@ -6,8 +6,10 @@ depcheck==0.3.2
 deprecation==2.1.0
 dj-database-url==3.0.1
 Django==5.2.4
+django-ckeditor==6.7.3
 django-cors-headers==4.7.0
 django-crispy-forms==2.4
+django-js-asset==3.1.2
 django-modeltranslation==0.19.16
 django-solo==2.4.0
 django-storages==1.14.6

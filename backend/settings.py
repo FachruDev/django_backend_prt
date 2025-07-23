@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     
     # Apps
     'article',
-    'configuration',
+    'webconfig',
+    
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -90,8 +91,7 @@ SUPABASE_KEY = config('SUPABASE_KEY')
 SUPABASE_BUCKET = config('SUPABASE_BUCKET')
 
 # Tell Django to use Supabase as the storage for uploaded files
-DEFAULT_FILE_STORAGE = 'storages.backends.supabase.SupabaseStorage'
-
+DEFAULT_FILE_STORAGE = 'backend.supabase_storage.SupabaseStorage'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

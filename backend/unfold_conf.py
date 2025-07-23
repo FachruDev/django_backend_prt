@@ -59,6 +59,25 @@ UNFOLD = {
                     },
                 ],
             },
+            {
+                "title": _("Web Configuration"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Web Settings"),
+                        "link": reverse_lazy("admin:webconfig_websetting_changelist"),
+                    },
+                    {
+                        "title": _("Social Link"),
+                        "link": reverse_lazy("admin:webconfig_sociallink_changelist"),
+                    },
+                    {
+                        "title": _("My Document"),
+                        "link": reverse_lazy("admin:webconfig_mydocument_changelist"),
+                    },
+                ],
+            },
         ],
     },
     
@@ -99,12 +118,12 @@ UNFOLD = {
             "important-dark": "var(--color-base-100)",  # text-base-100
         },
     },
-    # "EXTENSIONS": {
-    #     "modeltranslation": {
-    #         "flags": {
-    #             "en": "🇬🇧",
-    #             "id": "🇮🇩",
-    #         },
-    #     },
-    # },
+    "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {
+                "en": "🇬🇧",
+                "id": "🇮🇩",
+            },
+        },
+    },
 }
