@@ -29,11 +29,11 @@ INSTALLED_APPS = [
     'solo',
     'modeltranslation',
     'crispy_forms',
+    'django_cleanup.apps.CleanupConfig',
     
     # Apps
     'article',
     'webconfig',
-    
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -90,8 +90,15 @@ SUPABASE_URL = config('SUPABASE_URL')
 SUPABASE_KEY = config('SUPABASE_KEY')
 SUPABASE_BUCKET = config('SUPABASE_BUCKET')
 
-# Tell Django to use Supabase as the storage for uploaded files
-DEFAULT_FILE_STORAGE = 'backend.supabase_storage.SupabaseStorage'
+# Configuration Supabase Storage for Media Files
+STORAGES = {
+    "default": {
+        "BACKEND": "backend.supabase_storage.SupabaseStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,13 +124,10 @@ USE_TZ = True
 # Static & Media files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 # Public URL to access uploaded media files from Supabase
 MEDIA_URL = f'{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/'
 MEDIA_ROOT = ''
-
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
