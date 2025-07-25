@@ -2,7 +2,7 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 import os 
-from .unfold_conf import UNFOLD
+from utils.unfold_conf import UNFOLD
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -96,7 +96,7 @@ SUPABASE_BUCKET = config('SUPABASE_BUCKET')
 # Configuration Supabase Storage for Media Files
 STORAGES = {
     "default": {
-        "BACKEND": "backend.supabase_storage.SupabaseStorage",
+        "BACKEND": "utils.supabase_storage.SupabaseStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",

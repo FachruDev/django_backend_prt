@@ -5,6 +5,7 @@ from .models import (
     Experience, AchievementExperience, SkillsCategory, Skill
 )
 from unfold.contrib.forms.widgets import WysiwygWidget
+from modeltranslation.admin import TabbedTranslationAdmin
 
 class ImageProjectInline(admin.TabularInline):
     model = ImageProject
@@ -65,7 +66,7 @@ class ProjectCategoryAdmin(ModelAdmin):
     }
 
 @admin.register(Project)
-class ProjectAdmin(ModelAdmin):
+class ProjectAdmin(TabbedTranslationAdmin, ModelAdmin):
     list_display = ('title', 'subtitle', 'category', 'issued_on', 'role')
     list_filter = ('category', 'issued_on')
     search_fields = ('title', 'subtitle', 'description', 'role')
@@ -112,7 +113,7 @@ class ImageProjectAdmin(ModelAdmin):
     }
 
 @admin.register(Experience)
-class ExperienceAdmin(ModelAdmin):
+class ExperienceAdmin(TabbedTranslationAdmin, ModelAdmin):
     list_display = ('title', 'company', 'work_on', 'company_location')
     list_filter = ('company',)
     search_fields = ('title', 'role', 'company', 'work_on', 'company_location')
@@ -134,7 +135,7 @@ class ExperienceAdmin(ModelAdmin):
     }
 
 @admin.register(AchievementExperience)
-class AchievementExperienceAdmin(ModelAdmin):
+class AchievementExperienceAdmin(TabbedTranslationAdmin, ModelAdmin):
     list_display = ('experience', 'description')
     list_filter = ('experience',)
     search_fields = ('experience__title', 'description')
