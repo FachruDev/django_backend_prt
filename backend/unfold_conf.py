@@ -136,6 +136,45 @@ UNFOLD = {
                     },
                 ],
             },
+            {
+                "title": _("Portfolio"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Certificate"),
+                        "link": reverse_lazy("admin:portfolio_certificate_changelist"),
+                    },
+                    {
+                        "title": _("Project Category"),
+                        "link": reverse_lazy("admin:portfolio_projectcategory_changelist"),
+                    },
+                    {
+                        "title": _("Project"),
+                        "link": reverse_lazy("admin:portfolio_project_changelist"),
+                    },
+                    {
+                        "title": _("Image Project"),
+                        "link": reverse_lazy("admin:portfolio_imageproject_changelist"),
+                    },
+                    {
+                        "title": _("Experience"),
+                        "link": reverse_lazy("admin:portfolio_experience_changelist"),
+                    },
+                    {
+                        "title": _("Achievement Experience"),
+                        "link": reverse_lazy("admin:portfolio_achievementexperience_changelist"),
+                    },
+                    {
+                        "title": _("Skills Category"),
+                        "link": reverse_lazy("admin:portfolio_skillcategory_changelist"),
+                    },
+                    {
+                        "title": _("Skill"),
+                        "link": reverse_lazy("admin:portfolio_skill_changelist"),
+                    },
+                ],
+            },
         ],
     },
     

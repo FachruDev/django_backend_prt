@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'webconfig',
     'contact',
     'pages',
+    'portfolio',
     
     'django.contrib.admin',
     'django.contrib.auth',
