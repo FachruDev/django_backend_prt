@@ -35,7 +35,7 @@ class ProjectCategory(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=255, verbose_name="Judul Proyek")
     subtitle = models.CharField(max_length=255, blank=True, verbose_name="Subjudul")
-    description = models.CharField(verbose_name="Deskripsi")
+    description = models.TextField(verbose_name="Deskripsi")
     issued_on = models.DateField(blank=True, null=True, verbose_name="Tanggal Pengerjaan")
     role = models.CharField(max_length=100, verbose_name="Peran")
     category = models.ForeignKey(
@@ -88,7 +88,7 @@ class Experience(models.Model):
 # Model for achievement experience
 class AchievementExperience(models.Model):
     experience = models.ForeignKey(Experience, on_delete=models.CASCADE, related_name='achievements', verbose_name="Pengalaman Terkait")
-    description = models.CharField(verbose_name="Deskripsi Pencapaian")
+    description = models.TextField(verbose_name="Deskripsi Pencapaian")
 
     def __str__(self):
         return f"Pencapaian untuk {self.experience.title}"

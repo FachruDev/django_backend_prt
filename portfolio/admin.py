@@ -1,23 +1,26 @@
 from django.contrib import admin
+from django.db import models
 from unfold.admin import ModelAdmin
+from unfold.contrib.forms.widgets import WysiwygWidget
+from modeltranslation.admin import TabbedTranslationAdmin
 from .models import (
     Certificate, ProjectCategory, Project, ImageProject,
     Experience, AchievementExperience, SkillsCategory, Skill
 )
-from unfold.contrib.forms.widgets import WysiwygWidget
-from modeltranslation.admin import TabbedTranslationAdmin
 
+# Inline project image tetap biasa
 class ImageProjectInline(admin.TabularInline):
     model = ImageProject
     extra = 1
     fields = ('image', 'featured_image_url', 'featured_image_alt')
 
-class AchievementExperienceInline(admin.TabularInline):
+# Inline untuk AchievementExperience dengan WYSIWYG
+class AchievementExperienceInline(admin.StackedInline):
     model = AchievementExperience
     extra = 1
     fields = ('description',)
     formfield_overrides = {
-        AchievementExperience.description.field: {'widget': WysiwygWidget},
+        models.TextField: {'widget': WysiwygWidget},
     }
 
 @admin.register(Certificate)
@@ -26,7 +29,6 @@ class CertificateAdmin(ModelAdmin):
     list_filter = ('issuedby', 'issuedon', 'valid_until')
     search_fields = ('title', 'subtitle', 'issuedby', 'credential_id')
     list_per_page = 25
-
     fieldsets = (
         (None, {
             'fields': ('title', 'subtitle', 'issuedby', 'issuedon', 'valid_until', 'credential_id')
@@ -36,13 +38,14 @@ class CertificateAdmin(ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-
     unfold = {
         'list_display_links': ('title',),
         'list_filter_position': 'sidebar',
         'form_layout': [
-            {'title': 'Informasi Sertifikat', 'fields': ['title', 'subtitle', 'issuedby', 'issuedon', 'valid_until', 'credential_id']},
-            {'title': 'File Sertifikat', 'fields': ['certificate_image', 'pdf_certificate'], 'collapsible': True},
+            {'title': 'Informasi Sertifikat',
+             'fields': ['title', 'subtitle', 'issuedby', 'issuedon', 'valid_until', 'credential_id']},
+            {'title': 'File Sertifikat',
+             'fields': ['certificate_image', 'pdf_certificate'], 'collapsible': True},
         ],
     }
 
@@ -51,18 +54,10 @@ class ProjectCategoryAdmin(ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
     list_per_page = 25
-
-    fieldsets = (
-        (None, {
-            'fields': ('title',)
-        }),
-    )
-
+    fieldsets = ((None, {'fields': ('title',)}),)
     unfold = {
         'list_display_links': ('title',),
-        'form_layout': [
-            {'title': 'Informasi Kategori', 'fields': ['title']},
-        ],
+        'form_layout': [{'title': 'Informasi Kategori', 'fields': ['title']}],
     }
 
 @admin.register(Project)
@@ -72,22 +67,16 @@ class ProjectAdmin(TabbedTranslationAdmin, ModelAdmin):
     search_fields = ('title', 'subtitle', 'description', 'role')
     list_per_page = 25
     inlines = [ImageProjectInline]
-
-    fieldsets = (
-        (None, {
-            'fields': ('title', 'subtitle', 'description', 'issued_on', 'role', 'category')
-        }),
-    )
-
+    fieldsets = ((None, {'fields': ('title', 'subtitle', 'description', 'issued_on', 'role', 'category')}),)
     formfield_overrides = {
-        Project.description.field: {'widget': WysiwygWidget},
+        models.TextField: {'widget': WysiwygWidget},
     }
-
     unfold = {
         'list_display_links': ('title',),
         'list_filter_position': 'sidebar',
         'form_layout': [
-            {'title': 'Informasi Proyek', 'fields': ['title', 'subtitle', 'description', 'issued_on', 'role', 'category']},
+            {'title': 'Informasi Proyek',
+             'fields': ['title', 'subtitle', 'description', 'issued_on', 'role', 'category']},
         ],
     }
 
@@ -97,18 +86,13 @@ class ImageProjectAdmin(ModelAdmin):
     list_filter = ('project',)
     search_fields = ('project__title', 'featured_image_alt', 'featured_image_url')
     list_per_page = 25
-
-    fieldsets = (
-        (None, {
-            'fields': ('project', 'image', 'featured_image_url', 'featured_image_alt')
-        }),
-    )
-
+    fieldsets = ((None, {'fields': ('project', 'image', 'featured_image_url', 'featured_image_alt')}),)
     unfold = {
         'list_display_links': ('project',),
         'list_filter_position': 'sidebar',
         'form_layout': [
-            {'title': 'Informasi Gambar', 'fields': ['project', 'image', 'featured_image_url', 'featured_image_alt']},
+            {'title': 'Informasi Gambar',
+             'fields': ['project', 'image', 'featured_image_url', 'featured_image_alt']},
         ],
     }
 
@@ -119,18 +103,13 @@ class ExperienceAdmin(TabbedTranslationAdmin, ModelAdmin):
     search_fields = ('title', 'role', 'company', 'work_on', 'company_location')
     list_per_page = 25
     inlines = [AchievementExperienceInline]
-
-    fieldsets = (
-        (None, {
-            'fields': ('title', 'role', 'company', 'work_on', 'company_location')
-        }),
-    )
-
+    fieldsets = ((None, {'fields': ('title', 'role', 'company', 'work_on', 'company_location')}),)
     unfold = {
         'list_display_links': ('title',),
         'list_filter_position': 'sidebar',
         'form_layout': [
-            {'title': 'Informasi Pengalaman', 'fields': ['title', 'role', 'company', 'work_on', 'company_location']},
+            {'title': 'Informasi Pengalaman',
+             'fields': ['title', 'role', 'company', 'work_on', 'company_location']},
         ],
     }
 
@@ -140,17 +119,10 @@ class AchievementExperienceAdmin(TabbedTranslationAdmin, ModelAdmin):
     list_filter = ('experience',)
     search_fields = ('experience__title', 'description')
     list_per_page = 25
-
-    fieldsets = (
-        (None, {
-            'fields': ('experience', 'description')
-        }),
-    )
-
+    fieldsets = ((None, {'fields': ('experience', 'description')}),)
     formfield_overrides = {
-        AchievementExperience.description.field: {'widget': WysiwygWidget},
+        models.TextField: {'widget': WysiwygWidget},
     }
-
     unfold = {
         'list_display_links': ('experience',),
         'list_filter_position': 'sidebar',
@@ -164,13 +136,7 @@ class SkillsCategoryAdmin(ModelAdmin):
     list_display = ('title', 'icon')
     search_fields = ('title', 'icon')
     list_per_page = 25
-
-    fieldsets = (
-        (None, {
-            'fields': ('title', 'icon')
-        }),
-    )
-
+    fieldsets = ((None, {'fields': ('title', 'icon')}),)
     unfold = {
         'list_display_links': ('title',),
         'form_layout': [
@@ -184,17 +150,12 @@ class SkillAdmin(ModelAdmin):
     list_filter = ('category', 'status')
     search_fields = ('title', 'category__title', 'status')
     list_per_page = 25
-
-    fieldsets = (
-        (None, {
-            'fields': ('title', 'percentage', 'status', 'icon', 'category', 'projects', 'certificates')
-        }),
-    )
-
+    fieldsets = ((None, {'fields': ('title', 'percentage', 'status', 'icon', 'category', 'projects', 'certificates')}),)
     unfold = {
         'list_display_links': ('title',),
         'list_filter_position': 'sidebar',
         'form_layout': [
-            {'title': 'Informasi Skill', 'fields': ['title', 'percentage', 'status', 'icon', 'category', 'projects', 'certificates']},
+            {'title': 'Informasi Skill',
+             'fields': ['title', 'percentage', 'status', 'icon', 'category', 'projects', 'certificates']},
         ],
     }
