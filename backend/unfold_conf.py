@@ -93,6 +93,49 @@ UNFOLD = {
                     },
                 ],
             },
+            {
+                "title": _("Pages"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Hero"),
+                        "link": reverse_lazy("admin:pages_sectionhero_changelist"),
+                    },
+                    {
+                        "title": _("About"),
+                        "link": reverse_lazy("admin:pages_sectionabout_changelist"),
+                    },
+                    {
+                        "title": _("Certificate"),
+                        "link": reverse_lazy("admin:pages_sectioncertificate_changelist"),
+                    },
+                    {
+                        "title": _("Project"),
+                        "link": reverse_lazy("admin:pages_sectionproject_changelist"),
+                    },
+                    {
+                        "title": _("Call To Action"),
+                        "link": reverse_lazy("admin:pages_sectioncalltoaction_changelist"),
+                    },
+                    {
+                        "title": _("Header Experience"),
+                        "link": reverse_lazy("admin:pages_sectionheaderexperience_changelist"),
+                    },
+                    {
+                        "title": _("Skills"),
+                        "link": reverse_lazy("admin:pages_sectionskills_changelist"),
+                    },
+                    {
+                        "title": _("Article"),
+                        "link": reverse_lazy("admin:pages_sectionarticle_changelist"),
+                    },
+                    {
+                        "title": _("Contact"),
+                        "link": reverse_lazy("admin:pages_sectioncontact_changelist"),
+                    },
+                ],
+            },
         ],
     },
     
