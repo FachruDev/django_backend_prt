@@ -167,7 +167,7 @@ UNFOLD = {
                     },
                     {
                         "title": _("Skills Category"),
-                        "link": reverse_lazy("admin:portfolio_skillcategory_changelist"),
+                        "link": reverse_lazy("admin:portfolio_skillscategory_changelist"),
                     },
                     {
                         "title": _("Skill"),
