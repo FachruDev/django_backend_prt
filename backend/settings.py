@@ -26,14 +26,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'corsheaders',
-    'solo',
     'modeltranslation',
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
+    'solo',
     
     # Apps
     'article',
     'webconfig',
+    'contact',
     
     'django.contrib.admin',
     'django.contrib.auth',

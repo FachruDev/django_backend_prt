@@ -78,6 +78,21 @@ UNFOLD = {
                     },
                 ],
             },
+            {
+                "title": _("Contact"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Contact Form"),
+                        "link": reverse_lazy("admin:contact_contactform_changelist"),
+                    },
+                    {
+                        "title": _("Contact Information"),
+                        "link": reverse_lazy("admin:contact_contactinformation_changelist"),
+                    },
+                ],
+            },
         ],
     },
     
