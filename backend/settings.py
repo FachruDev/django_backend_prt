@@ -3,6 +3,7 @@ from decouple import config
 import dj_database_url
 import os 
 from utils.unfold_conf import UNFOLD
+from utils.ckeditor_conf import CKEDITOR_5_CONFIGS
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_cleanup.apps.CleanupConfig',
     'solo',
+    'django_ckeditor_5',
     
     # Apps
     'article',
@@ -118,6 +120,9 @@ USE_I18N = True
 LANGUAGES = (
     ("id", _("Indonesia")),
     ("en", _("English")),
+)
+MODELTRANSLATION_CUSTOM_FIELDS = (
+    'CKEditor5Field',
 )
 TIME_ZONE = 'Asia/Jakarta'
 USE_I18N = True

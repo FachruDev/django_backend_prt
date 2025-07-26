@@ -47,7 +47,7 @@ class ArticleAdmin(TabbedTranslationAdmin, ModelAdmin):
     )
 
     formfield_overrides = {
-        models.TextField: {"widget": WysiwygWidget},  
+        # models.TextField: {"widget": WysiwygWidget},  
         Article._meta.get_field("title"): {"widget": None},
         Article._meta.get_field("meta_title"): {"widget": WysiwygWidget},
         Article._meta.get_field("meta_description"): {"widget": WysiwygWidget},
