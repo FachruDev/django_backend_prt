@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django_ckeditor_5.fields import CKEditor5Field
+from ckeditor.fields import RichTextField
 
 # Seo model
 class SEOModel(models.Model):
@@ -44,7 +44,7 @@ class Article(SEOModel):
 
     title = models.CharField(_("Title"), max_length=200)
     subtitle = models.CharField(_("Subtitle"), max_length=255, blank=True)
-    content = CKEditor5Field(_("Content"))
+    content = RichTextField(_("Content"))
     category = models.ForeignKey(ArticleCategory, on_delete=models.SET_NULL, null=True, blank=True, related_name="articles")
     tags = models.ManyToManyField(ArticleTag, blank=True, related_name="articles")
     status = models.CharField(_("Status"), max_length=10, choices=ArticleStatus.choices, default=ArticleStatus.DRAFT)

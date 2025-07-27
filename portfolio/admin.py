@@ -8,13 +8,11 @@ from .models import (
     Experience, AchievementExperience, SkillsCategory, Skill
 )
 
-# Inline project image tetap biasa
 class ImageProjectInline(admin.TabularInline):
     model = ImageProject
     extra = 1
     fields = ('image', 'featured_image_url', 'featured_image_alt')
 
-# Inline untuk AchievementExperience dengan WYSIWYG
 class AchievementExperienceInline(admin.StackedInline):
     model = AchievementExperience
     extra = 1
