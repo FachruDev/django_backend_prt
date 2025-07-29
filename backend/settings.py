@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'contact',
     'pages',
     'portfolio',
+    'api',
     
     'django.contrib.admin',
     'django.contrib.auth',
