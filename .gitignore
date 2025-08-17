@@ -2,8 +2,11 @@
 .env.local
 
 .vscode
-
 __pycache__
 migrations
 
-staticfiles
+staticfiles/
+
+production_config.py
+
+requirements_opsional.txt

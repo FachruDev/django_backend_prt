@@ -2,6 +2,9 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 import os 
+from utils.unfold_conf import UNFOLD
+from utils.ckeditor_conf import CKEDITOR_CONFIGS, CKEDITOR_UPLOAD_PATH
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,13 +20,27 @@ CORS_ALLOW_ALL_ORIGINS = config('CORS_ALLOW_ALL_ORIGINS', default=False, cast=bo
 
 INSTALLED_APPS = [
     # Framework
+    'unfold',
+    'unfold.contrib.forms',
     'rest_framework',    
     'whitenoise.runserver_nostatic', 
     'django.contrib.staticfiles',
     'storages',
     'corsheaders',
+    'modeltranslation',
+    'crispy_forms',
+    'django_cleanup.apps.CleanupConfig',
+    'solo',
+    'ckeditor',
+    'ckeditor_uploader',
     
     # Apps
+    'article',
+    'webconfig',
+    'contact',
+    'pages',
+    'portfolio',
+    'api',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,6 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 ]
+
+CRISPY_TEMPLATE_PACK = "unfold_crispy"
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["unfold_crispy"]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -42,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -76,9 +97,15 @@ SUPABASE_URL = config('SUPABASE_URL')
 SUPABASE_KEY = config('SUPABASE_KEY')
 SUPABASE_BUCKET = config('SUPABASE_BUCKET')
 
-# Tell Django to use Supabase as the storage for uploaded files
-DEFAULT_FILE_STORAGE = 'storages.backends.supabase.SupabaseStorage'
-
+# Configuration Supabase Storage for Media Files
+STORAGES = {
+    "default": {
+        "BACKEND": "utils.supabase_storage.SupabaseStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -91,6 +118,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'id'
+USE_I18N = True
+LANGUAGES = (
+    ("id", _("Indonesia")),
+    ("en", _("English")),
+)
 TIME_ZONE = 'Asia/Jakarta'
 USE_I18N = True
 USE_TZ = True
@@ -99,13 +131,10 @@ USE_TZ = True
 # Static & Media files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 # Public URL to access uploaded media files from Supabase
 MEDIA_URL = f'{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_BUCKET}/'
 MEDIA_ROOT = ''
-
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
