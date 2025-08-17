@@ -9,3 +9,5 @@ migrations
 staticfiles/
 
 production_config.py
+
+requirements_opsional.txt

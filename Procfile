@@ -1,1 +1,1 @@
-web: gunicorn nama_project_anda.wsgi --log-file -
+web: gunicorn backend.wsgi --log-file -
